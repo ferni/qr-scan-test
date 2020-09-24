@@ -1,26 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
+import React ,{useState} from 'react';
 import './App.css';
-import QrTest from "./QrTest"
+import ScanQrButton from "./ScanQrButton"
 
 function App() {
+  const [scanResult, setScanResult] = useState()
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <QrTest />
+      {scanResult && <div>
+        You scanned: <strong>{scanResult}</strong>
+      </div>}
+      <ScanQrButton onScan={data => setScanResult(data)} onError={err => alert('Error: ' + err)}>
+        SCAN ADDRESS
+      </ScanQrButton>
     </div>
   );
 }
