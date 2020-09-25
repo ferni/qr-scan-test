@@ -1,1 +1,1 @@
-Preview: https://qr-scan-test.vercel.app/
+Preview: https://qr-scan-test.ferni.vercel.app 

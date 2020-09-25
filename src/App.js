@@ -15,7 +15,7 @@ function App() {
         <ScanQrButton
           onScan={data => setScanResult(data)}
           onError={err => alert('Error: ' + err)}
-          sx={{width: '145px', margin: '40% auto 0'}}
+          sx={{width: '145px', margin: '80px auto 0'}}
         >
           SCAN ADDRESS
         </ScanQrButton>
