@@ -1,46 +1,42 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import QrReader from 'react-qr-reader'
 import { ReactComponent as CrossIcon} from "./crossIcon.svg"
 import { Box } from 'theme-ui'
 
-class ScanQrButton extends Component {
+const ScanQrButton = ({onScan, onError, children, ...props}) => {
+  const [scanning, setScanning] = useState(false)
 
-  state = {
-    scanning: false
-  }
-
-  handleScan = data => {
+  const handleScan = data => {
     if (data) {
-      this.setState({scanning: false})
-      this.props.onScan(data)
+      setScanning(false)
+      onScan(data)
     }
   }
-  handleError = err => {
-    this.setState({scanning: false})
+  const handleError = err => {
+    setScanning(false)
     console.error(err)
-    this.props.onError(err)
+    onError(err)
   }
-  render() {
-    return (
-      <div>
-        {this.state.scanning &&
-        <Box sx={{position: 'fixed', top: '0', width: '100%', height: '100%', bg: 'black'}}>
-          <Box onClick={() => this.setState({scanning: false})}
-            sx={{position: 'absolute', top: '0', right: '0', zIndex: '200'}}>
-            <CrossIcon width="40px" height="40px" style={{fill: "#fff"}} />
-          </Box>
-          <QrReader
-            delay={300}
-            onError={this.handleError}
-            onScan={this.handleScan}
-          />
-        </Box>}
-        <button onClick={() => this.setState({scanning: true})} {...this.props}>
-          {this.props.children}
-        </button>
-      </div>
-    )
-  }
+
+  return (
+    <div>
+      {scanning &&
+      <Box sx={{position: 'fixed', top: '0', width: '100%', height: '100%', bg: 'black'}}>
+        <Box onClick={() => setScanning(false)}
+          sx={{position: 'absolute', top: '0', right: '0', zIndex: '200'}}>
+          <CrossIcon width="40px" height="40px" style={{fill: "#fff"}} />
+        </Box>
+        <QrReader
+          delay={300}
+          onError={handleError}
+          onScan={handleScan}
+        />
+      </Box>}
+      <button onClick={() => setScanning(true)} {...props}>
+        {children}
+      </button>
+    </div>
+  )
 }
 
 export default ScanQrButton;
