@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import QrReader from 'react-qr-reader'
+import { ReactComponent as CrossIcon} from "./crossIcon.svg"
+import { Box } from 'theme-ui'
 
 class ScanQrButton extends Component {
 
@@ -21,12 +23,18 @@ class ScanQrButton extends Component {
   render() {
     return (
       <div>
-        {this.state.scanning && <QrReader
-          delay={300}
-          onError={this.handleError}
-          onScan={this.handleScan}
-          style={{ width: '100%', position: 'fixed', height: '100%', top: '0' }}
-        />}
+        {this.state.scanning &&
+        <Box sx={{position: 'fixed', top: '0', width: '100%', height: '100%', bg: 'black'}}>
+          <Box onClick={() => this.setState({scanning: false})}
+            sx={{position: 'absolute', top: '0', right: '0', zIndex: '200'}}>
+            <CrossIcon width="40px" height="40px" style={{fill: "#fff"}} />
+          </Box>
+          <QrReader
+            delay={300}
+            onError={this.handleError}
+            onScan={this.handleScan}
+          />
+        </Box>}
         <button onClick={() => this.setState({scanning: true})} {...this.props}>
           {this.props.children}
         </button>
